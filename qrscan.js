@@ -51,26 +51,19 @@ QRReader.init = function (webcam_selector, baseurl) {
 		});
 	}
 
-	// Firefox lets users choose their camera, so no need to search for an environment
-	// facing camera
-	if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1)
-		startCapture(null);
-	else {
-		MediaStreamTrack.getSources(function (sources) {
-			var found_env_cam = false;
-			for (var i = 0; i < sources.length; i++) {
-				if (sources[i].kind == "video" && sources[i].facing == "environment") {
-					var constraints = {optional: [{sourceId: sources[i].id}]};
-					startCapture(constraints);
-					
-					found_env_cam = true;
-				}
-			}
+	navigator.mediaDevices.enumerateDevices()
+	.then(devices => {
+		devices.filter(d => d.kind === 'videoinput').forEach(device => {
+			console.log(device.kind + ": " + device.label +
+						" id = " + device.deviceId);
 
-			// If no specific environment camera is found (non-smartphone), user chooses
-			if (!found_env_cam) startCapture(null);
+			// Just the first device found for now
+			startCapture(device);
 		});
-	}
+	})
+	.catch(err => {
+		console.log('Error in navigator.mediaDevices: ' + err);
+	});
 }
 
 /**
