@@ -1,0 +1,13 @@
+{
+  "name": "qrscanjs",
+  "version": "1.0.0",
+  "description": "Performant QR code camera scanner",
+  "main": "qrscan.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonohill/QRScanJS.git"
+  },
+  "author": "Jeija <norrepli@gmail.com>",
+  "license": "LGPLv2.1",
+  "homepage": "https://github.com/Jeija/qrscanjs"
+}
